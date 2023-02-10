@@ -1,3 +1,5 @@
 # DjangPrj
 
-This is a test web application where i'm trying all function of django
+VE_fin_app - venv + django project where i study django
+
+fin_venv - venv + django project where i work on diplom work 
