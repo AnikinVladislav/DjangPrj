@@ -5,13 +5,6 @@ Home page
 {% endblock %}
 
 {% block content %}
-<div class="text-center fs-1 fw-bold">
-  {% if user.is_active %}
-    <span> Welcome {{ user.last_name }} {{ user.first_name }}!</span>
-  {% else %}
-    <span> Please log in!</span>
-  {% endif %}
-</div>
 <ul class="list-group list-group-horizontal">
   <li class="list-group-item text-center text-white bg-dark rounded-pill m-2" style="width: 33%">
     <span class="fs-1 fw-bold"><i class="fa-solid fa-magnifying-glass-dollar"></i></span>
