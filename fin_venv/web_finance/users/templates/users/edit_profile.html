@@ -1,12 +1,12 @@
 {% extends "main/master.html" %}
 
 {% block title %}
-Registration
+Edit Profile
 {% endblock %}
 
 {% block content %}
   <div class="shadow m-5 p-2 bg-dark text-white rounded-5">
-    <div class="text-center"><h1><span class="badge text-bg-light">Registration Form</span><br></h1></div>
+    <div class="text-center"><h1><span class="badge text-bg-light">Edit Form</span><br></h1></div>
     
     {% if form.errors %}
       <!-- {% for error in form.errors %} -->
@@ -17,11 +17,11 @@ Registration
       <!-- {% endfor %} -->
     {% endif %}
 
-    <form action="{% url 'register_user' %}" method="POST" class="rounded-5 m-5">
+    <form method="POST" class="rounded-5 m-5">
       {% csrf_token %}
       {{ form.as_p }}
 
-    <button class="btn btn-outline-light" type="submit" style="width: 100%;">Registrate</button>
+    <button class="btn btn-outline-light" type="submit" style="width: 100%;">Update</button>
     </form>
   </div>
 
