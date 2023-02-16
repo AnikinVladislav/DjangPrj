@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 from .models import *
 from .forms import *
 
@@ -23,11 +23,12 @@ def add_spending(request):
         form = SpendingForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/add_spending?submitted=True')
+            return reverse_lazy('main')
+            submitted = True
+        else:
+            print('form is not valid')
     else:
         form = SpendingForm
-        if 'submitted' in request.GET:
-            submitted = True
 
     context = {
         'form': form,
