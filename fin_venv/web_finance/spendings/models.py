@@ -12,7 +12,7 @@ class categories(models.Model):
         verbose_name_plural = 'categories'
 
 class spendings(models.Model):
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
     amount = models.FloatField()
     category = models.ForeignKey(categories, null=True, on_delete=models.SET_NULL)
     user =  models.ForeignKey(User, on_delete=models.CASCADE)

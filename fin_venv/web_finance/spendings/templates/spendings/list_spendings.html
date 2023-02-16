@@ -6,42 +6,42 @@
 
 {% block content %}
 <p class="text-center fw-bold text-light bg-secondary">Personal spendings {{myuser}}!</p>
-<div class="row">
-    <div class="col-md-2 m-3">
+<div  class="d-flex p-2">
+    <div class="flex-grow-1 p-3">
+        <table class="table table-secondary table-striped table-bordered border-white">
+            <thead>
+                <tr>
+                    <th class="rounded-end rounded-5">Date</th>
+                    <th>Category</th>
+                    <th class="rounded-start rounded-5">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for spending in myuserspendings %}
+                    <tr>
+                        <td class="rounded-end rounded-5">{{spending.date}}</td>
+                        {% for category in  allcategories %}
+                            {% if category.id == spending.category_id %}
+                                <td>{{category.description}}</td>
+                            {% endif %}
+                        {% endfor %}
+                        <td class="rounded-start rounded-5">{{spending.amount}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
         <p class="text-center">Category</p>
-        <select class="form-select">
+        <select class="form-select mb-2">
             {% for category in  allcategories %}
                 <option>{{category.description}}</option>
             {% endfor %}
         </select>
+        <a href="{% url 'add_spending' %}"><button class="btn btn-outline-success" type="button" style="width: 100%;">Add</button>
     </div>
-
 </div>
-<div class="container-fluid">
-    <table class="table table-secondary table-striped table-bordered border-white">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Date</th>
-                <th>Category</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for spending in myuserspendings %}
-                <tr>
-                    <td>{{spending.id}}</td>
-                    <td>{{spending.date}}</td>
-                    {% for category in  allcategories %}
-                        {% if category.id == spending.category_id %}
-                            <td>{{category.description}}</td>
-                        {% endif %}
-                    {% endfor %}
-                    <td>{{spending.amount}}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-  </div>
+
+
 
 {% endblock %}  

@@ -1,0 +1,44 @@
+{% extends "main/master.html" %}
+
+{% block title %}
+    Add spending
+{% endblock %}
+
+{% block content %}
+ <div class="shadow m-5 p-2 bg-dark text-white rounded-5">
+    <div class="text-center"><h1><span class="badge text-bg-light">Add Spending Form</span><br></h1></div>
+
+     {% if submitted %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong><i class="fa-solid fa-triangle-exclamation"></i></strong> Add spending successfully
+        </div>
+     {% else %}
+
+
+<!--    {% if form.errors %}-->
+<!--      &lt;!&ndash; {% for error in form.errors %} &ndash;&gt;-->
+<!--        <div class="alert alert-warning alert-dismissible">-->
+<!--          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>-->
+<!--          <strong><i class="fa-solid fa-triangle-exclamation"></i></strong> Error-->
+<!--        </div>    -->
+<!--      &lt;!&ndash; {% endfor %} &ndash;&gt;-->
+<!--    {% endif %}-->
+
+        <form action="" method="POST" class="rounded-5 m-5">
+          {% csrf_token %}
+            <input class="form-control mb-2" list="datalistOptions" name="category" placeholder="Category">
+            <datalist id="datalistOptions">
+                {% for category in categories %}
+                    <option value="{{ category.description }}">
+                {% endfor %}
+            </datalist>
+            <div class="mb-2">
+                <input type="number" class="form-control" name="amount" placeholder="Amount">
+            </div>
+        <button class="btn btn-outline-success" type="submit" style="width: 100%;">Add</button>
+        </form>
+
+    {% endif %}
+ </div>
+{% endblock %}

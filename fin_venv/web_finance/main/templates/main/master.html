@@ -56,12 +56,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'main' %}"><i class="fa-solid fa-house-chimney"></i> Home</a>
             </li>
+            {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'spendings' user.id %}"><i class="fa-solid fa-list"></i> Show all spendings {{user.id}} </a>
+                <a class="nav-link" href="{% url 'spendings' user.id %}"><i class="fa-solid fa-list"></i> Show all spendings</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'main' %}"><i class="fa-solid fa-chart-column"></i> Graph</a>
             </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'about' %}"><i class="fa-solid fa-info"></i> About us</a>
             </li>
