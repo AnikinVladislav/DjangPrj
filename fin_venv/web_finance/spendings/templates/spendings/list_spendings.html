@@ -8,12 +8,13 @@
 <p class="text-center fw-bold text-light bg-secondary">Personal spendings {{myuser}}!</p>
 <div  class="d-flex p-2">
     <div class="flex-grow-1 p-3">
-        <table class="table table-secondary table-striped table-bordered border-white">
+        <table class="table table-secondary table-striped table-bordered border-white text-center">
             <thead>
                 <tr>
                     <th class="rounded-end rounded-5">Date</th>
                     <th>Category</th>
-                    <th class="rounded-start rounded-5">Amount</th>
+                    <th>Amount</th>
+                    <th class="rounded-start rounded-5">Command</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,7 +26,11 @@
                                 <td>{{category.description}}</td>
                             {% endif %}
                         {% endfor %}
-                        <td class="rounded-start rounded-5">{{spending.amount}}</td>
+                        <td>{{spending.amount}}</td>
+                        <td class="rounded-start rounded-5">
+                            <a href="{% url 'edit_spending' spending.id %}"><button type="button" class="btn btn-warning btn-sm">Edit</button></a>
+                            <a href=""><button type="button" class="btn btn-danger btn-sm">Delete</button></a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -12,13 +12,16 @@ class categories(models.Model):
         verbose_name_plural = 'categories'
 
 class spendings(models.Model):
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
     amount = models.FloatField()
     category = models.ForeignKey(categories, null=True, on_delete=models.SET_NULL)
     user =  models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         return f"ID({self.id}): {self.date} {self.amount} {self.category} {self.user}" 
+
+    def get_absolute_url(self):
+        return f'/spendings/{self.id}'
 
     class Meta:
         verbose_name = 'spending'

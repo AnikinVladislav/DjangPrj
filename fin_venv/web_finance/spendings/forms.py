@@ -6,5 +6,5 @@ class SpendingForm(forms.ModelForm):
 
     class Meta:
         model = spendings
-        fields = ('category', 'amount', 'user')
+        fields = ('date', 'category', 'amount', 'user')
 
