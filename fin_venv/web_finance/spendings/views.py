@@ -6,7 +6,7 @@ from datetime import datetime
 
 def spendigs_view(request, id):
     myuser = User.objects.get(id=id)
-    myuserspendings = spendings.objects.filter(user=myuser).values()
+    myuserspendings = spendings.objects.filter(user=myuser).order_by('-date').values()
     allcategories = categories.objects.all().values()
     context = {
         'myuser': myuser,
