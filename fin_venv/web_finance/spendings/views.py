@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
+from datetime import datetime
 
 
 def spendigs_view(request, id):
@@ -20,11 +21,13 @@ def add_spending(request):
     if request.method == 'POST':
         form = SpendingForm(request.POST)
         if form.is_valid():
+            print(request.POST)
             form.save()
             return redirect('spendings',request.user.id)
             submitted = True
         else:
             print('form is not valid')
+            print(request.POST)
             return redirect('add_spending')
     else:
         allcategories = categories.objects.all().values()

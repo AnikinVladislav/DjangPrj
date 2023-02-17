@@ -27,16 +27,17 @@
 
         <form action="" method="POST" class="rounded-5 m-5">
           {% csrf_token %}
-          {{form.as_p}}
-<!--            <input class="form-control mb-2" list="datalistOptions" name="category" placeholder="Category">-->
-<!--            <datalist id="datalistOptions">-->
-<!--                {% for category in categories %}-->
-<!--                    <option value="{{ category.description }}">-->
-<!--                {% endfor %}-->
-<!--            </datalist>-->
-<!--            <div class="mb-2">-->
-<!--                <input type="number" class="form-control" name="amount" placeholder="Amount">-->
-<!--            </div>-->
+          <select class="form-select" name="category">
+              {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.description }}</option>
+              {% endfor %}
+          </select>
+          <div class="mb-2">
+                <input type="number" class="form-control" name="amount" placeholder="Amount">
+          </div>
+          <select class="form-select text-secondary" name="user" required id="id_user">
+                <option value="{{user.id}}" selected>User :{{user.username}}</option>
+          </select>
         <button class="btn btn-outline-success" type="submit" style="width: 100%;">Add</button>
         </form>
 

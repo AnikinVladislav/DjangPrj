@@ -19,7 +19,7 @@
             <tbody>
                 {% for spending in myuserspendings %}
                     <tr>
-                        <td class="rounded-end rounded-5">{{spending.date}}</td>
+                        <td class="rounded-end rounded-5">{{spending.date.day}}.{{spending.date.month}}.{{spending.date.year}}</td>
                         {% for category in  allcategories %}
                             {% if category.id == spending.category_id %}
                                 <td>{{category.description}}</td>
