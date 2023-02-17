@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
 
@@ -18,21 +17,22 @@ def spendigs_view(request, id):
 
 def add_spending(request):
     submitted = False
-    allcategories = categories.objects.all().values()
     if request.method == 'POST':
         form = SpendingForm(request.POST)
         if form.is_valid():
             form.save()
-            return reverse_lazy('main')
+            return redirect('spendings',request.user.id)
             submitted = True
         else:
             print('form is not valid')
+            return redirect('add_spending')
     else:
+        allcategories = categories.objects.all().values()
         form = SpendingForm
 
     context = {
         'form': form,
         'submitted': submitted,
-        'categories': allcategories
+        'categories': allcategories,
     }
     return render(request, 'spendings/add_spending.html', context)
