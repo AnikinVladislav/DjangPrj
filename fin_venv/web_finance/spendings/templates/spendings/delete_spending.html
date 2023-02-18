@@ -1,0 +1,16 @@
+{% extends "main/master.html" %}
+
+{% block title %}
+    Delete spending
+{% endblock %}
+
+{% block content %}
+<div class="shadow m-5 p-2 bg-dark text-white rounded-5">
+    <div class="text-center"><h1><span class="badge text-bg-light">Add Spending Form</span><br></h1></div>
+
+    <form method="POST" class="rounded-5 m-5">
+        {% csrf_token %}
+        <button class="btn btn-outline-danger" type="submit" style="width: 100%;">Delete</button>
+    </form>
+ </div>
+{% endblock %}

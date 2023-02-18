@@ -5,7 +5,7 @@ class categories(models.Model):
     description = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
-        return f"ID({self.id}): {self.description}"
+        return f"{self.description}"
 
     class Meta:
         verbose_name = 'category'
@@ -19,9 +19,6 @@ class spendings(models.Model):
     
     def __str__(self):
         return f"ID({self.id}): {self.date} {self.amount} {self.category} {self.user}" 
-
-    def get_absolute_url(self):
-        return f'/spendings/{self.id}'
 
     class Meta:
         verbose_name = 'spending'

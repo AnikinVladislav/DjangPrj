@@ -22,44 +22,37 @@ def spendigs_view(request, id):
 def add_spending(request):
     if request.method == 'POST':
         form = SpendingForm(request.POST)
-        if form.is_valid() and float(request.POST['amount']) > 0:
-            print(request.POST)
+        if form.is_valid():
+            print('form valid', request.POST)
             form.save()
             return redirect('spendings',request.user.id)
         else:
-            errors = 'form is not valid'
-            if float(request.POST['amount']) <= 0:
-                messages.success(request, ("Amount must be a positive value"))
-            else:
-                messages.success(request, ("Form not correctle filled"))
-            print(errors)
-            return redirect('add_spending')
+            print('form invalid', request.POST)
     else:
-        allcategories = categories.objects.all().values()
-        form = SpendingForm
+        form = SpendingForm(initial={'user': f'{request.user.id}'})
 
     context = {
         'form': form,
-        'categories': allcategories,
     }
     return render(request, 'spendings/add_spending.html', context)
 
 
-# def edit_spending(request, id):
-#     myspending = spendings.objects.get(id=id)
-#     form = SpendingForm(request.POST or None, instance=myspending)
-#     allcategories = categories.objects.all().values()
-#     context = {
-#         'form': form,
-#         'categories': allcategories,
-#     }
-#     return render(request, 'spendings/edit_spending.html', context)
+def editspending(request, id):
+    myspending = spendings.objects.get(id = id)
+    form = SpendingForm(request.POST or None, instance=myspending)
+    if form.is_valid():
+        form.save()
+        return redirect('spendings',request.user.id)
+        
+    context = {
+        'form': form,
+        'myspending': myspending,
+    }
+    return render(request, 'spendings/edit_spending.html', context)
 
 
-
-class EditSpendingView(generic.UpdateView):
-    model = spendings
-    template_name = 'spendings/add_spending.html'
-    form_class = SpendingForm
-    # success_url = reverse_lazy('spendings')
-
+def deletespending(request, id):
+    pass
+    # model = spendings
+    # template_name = 'spendings/delete_spending.html'
+    # success_url = '/../..'

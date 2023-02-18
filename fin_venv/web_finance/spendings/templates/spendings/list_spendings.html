@@ -29,7 +29,7 @@
                         <td>{{spending.amount}}</td>
                         <td class="rounded-start rounded-5">
                             <a href="{% url 'edit_spending' spending.id %}"><button type="button" class="btn btn-warning btn-sm">Edit</button></a>
-                            <a href=""><button type="button" class="btn btn-danger btn-sm">Delete</button></a>
+                            <a href="{% url 'delete_spending' spending.id %}"><button type="button" class="btn btn-danger btn-sm">Delete</button></a>
                         </td>
                     </tr>
                 {% endfor %}
