@@ -5,45 +5,37 @@
 {% endblock %}
 
 {% block content %}
-<p class="text-center fw-bold text-light bg-secondary">Personal spendings {{myuser}}!</p>
-<div  class="d-flex p-2">
-    <div class="flex-grow-1 p-3">
-        <table class="table table-secondary table-striped table-bordered border-white text-center">
-            <thead>
-                <tr>
-                    <th class="rounded-end rounded-5">Date</th>
-                    <th>Category</th>
-                    <th>Amount</th>
-                    <th class="rounded-start rounded-5">Command</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for spending in myuserspendings %}
-                    <tr>
-                        <td class="rounded-end rounded-5">{{spending.date.day}}.{{spending.date.month}}.{{spending.date.year}}</td>
+<p class="text-center h1"><span class="badge bg-dark rounded rounded-2">Personal spendings {{myuser}}</span></p>
+<div class="d-flex justify-content-between p-2">
+    <!-- <p class="text-center">Category</p>
+    <select class="form-select mb-2">
+        {% for category in  allcategories %}
+            <option>{{category.description}}</option>
+        {% endfor %}
+    </select> -->
+    <a href="{% url 'add_spending' %}"><button class="btn btn-outline-success btn-lg" type="button"><i class="fa-solid fa-plus"></i></button></a>
+</div>
+<div class="d-flex p-2">
+    <div class="flex-grow-1">
+        <ul class="list-group">
+            {% for spending in myuserspendings %}
+            <li class="list-group-item d-flex border-0">
+                <a href="{% url 'edit_spending' spending.id %}" class="list-group-item list-group-item-action list-group-item-info rounded rounded-3 me-1">
+                    
+                    <small><i class="fa-solid fa-calendar-days"></i> {{spending.date.day}}.{{spending.date.month}}.{{spending.date.year}}</small><br>
+                    <div class="d-flex justify-content-between">
                         {% for category in  allcategories %}
                             {% if category.id == spending.category_id %}
                                 <td>{{category.description}}</td>
                             {% endif %}
                         {% endfor %}
-                        <td>{{spending.amount}}</td>
-                        <td class="rounded-start rounded-5">
-                            <a href="{% url 'edit_spending' spending.id %}"><button type="button" class="btn btn-warning btn-sm">Edit</button></a>
-                            <a href="{% url 'delete_spending' spending.id %}"><button type="button" class="btn btn-danger btn-sm">Delete</button></a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <p class="text-center">Category</p>
-        <select class="form-select mb-2">
-            {% for category in  allcategories %}
-                <option>{{category.description}}</option>
+                        <span class="badge bg-success rounded-pill align-self-end">{{spending.amount}} <i class="fa-solid fa-ruble-sign"></i></span>
+                    </div>
+                </a>
+                <a href="{% url 'delete_spending' spending.id %}" class="align-self-center"><button type="button" class="btn btn-outline-danger btn-lg"><i class="fa-solid fa-trash-can"></i></button></a>
+            </li>  
             {% endfor %}
-        </select>
-        <a href="{% url 'add_spending' %}"><button class="btn btn-outline-success" type="button" style="width: 100%;">Add</button>
+        </ul>
     </div>
 </div>
 

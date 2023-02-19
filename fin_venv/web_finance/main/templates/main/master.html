@@ -17,37 +17,38 @@
 </head>
 <body>
     <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                <h6>Menu</h6>
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <img src="{% static 'main/logo-no-background.png' %}" alt="Logo" style="width: 45%">
-            {% if user.is_authenticated %}
-                <ul class="list-group">
-                    <li class="list-group-item text-center bg-dark border-0">
-                        <a href="{% url 'logout' %}">
-                            <button class="btn btn-outline-light" type="button">
-                                <span class="badge text-bg-light">Hi, {{ user.username }}</span><br>
-                                Log out                            
-                            </button>
-                        </a>
-                    </li>
-                    <li class="list-group-item text-center bg-dark border-0">
-                        <a href="{% url 'edit_profile' %}"><button class="btn btn-outline-light" type="button" style="width: 100%;">Edit</button></a>
-                    </li>
-                </ul>
-                
-            {% else %}
-                <ul class="list-group">
-                    <li class="list-group-item text-center bg-dark border-0">
-                        <a href="{% url 'login' %}"><button class="btn btn-outline-light" type="button" style="width: 100%;">Log in</button></a>
-                    </li>
-                    <li class="list-group-item text-center bg-dark border-0">
-                        <a href="{% url 'register_user' %}"><button class="btn btn-outline-light" type="button">Registration</button></a>
-                    </li>
-                </ul>
-            {% endif %}                           
+        <div class="d-flex justify-content-center">
+            <div class="align-self-center me-3">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <h6>Menu</h6>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="align-self-center">
+                <img src="{% static 'main/logo-no-background.png' %}" class="img-fluid" alt="Logo">
+            </div>
+            <div class="align-self-center ms-3">
+                {% if user.is_authenticated %}
+                    <ul class="list-group">
+                        <li class="list-group-item text-center bg-dark border-0">
+                            <a href="{% url 'logout' %}"><button class="btn btn-outline-light w-100" type="button">Logout</button></a>
+                        </li>
+                        <li class="list-group-item text-center bg-dark border-0">
+                            <a href="{% url 'edit_profile' %}"><button class="btn btn-outline-light w-100" type="button">Edit</button></a>
+                        </li>
+                    </ul>
+                    
+                {% else %}
+                    <ul class="list-group">
+                        <li class="list-group-item text-center bg-dark border-0">
+                            <a href="{% url 'login' %}"><button class="btn btn-outline-light w-100" type="button">Login</button></a>
+                        </li>
+                        <li class="list-group-item text-center bg-dark border-0">
+                            <a href="{% url 'register_user' %}"><button class="btn btn-outline-light w-100" type="button">Registration</button></a>
+                        </li>
+                    </ul>
+                {% endif %}      
+            </div>                     
         </div>
         
     </nav>

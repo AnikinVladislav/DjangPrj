@@ -52,7 +52,7 @@ def editspending(request, id):
 
 
 def deletespending(request, id):
-    pass
-    # model = spendings
-    # template_name = 'spendings/delete_spending.html'
-    # success_url = '/../..'
+    myspending = spendings.objects.get(id = id)
+    myspending.delete()
+    return redirect('spendings',request.user.id)
+
