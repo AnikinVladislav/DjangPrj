@@ -5,16 +5,29 @@ from datetime import datetime
 from django.contrib import messages
 from django.views import generic
 from django.urls import reverse_lazy
+from django.http import HttpResponse
+import csv
+from django.core.paginator import Paginator
 
 
 def spendigs_view(request, id):
     myuser = User.objects.get(id=id)
     myuserspendings = spendings.objects.filter(user=myuser).order_by('-date').values()
     allcategories = categories.objects.all().values()
+    print(request.GET)
+
+    # set up paginator, 8 spendings per page
+    p = Paginator(spendings.objects.filter(user=myuser).order_by('-date').values(), 8)
+    page = request.GET.get('page')
+    spendings_page = p.get_page(page)
+    nums = "a" * spendings_page.paginator.num_pages
+    
     context = {
         'myuser': myuser,
         'myuserspendings': myuserspendings,
-        'allcategories': allcategories
+        'allcategories': allcategories,
+        'spendings_page': spendings_page,
+        'nums': nums
     }
     return render(request, 'spendings/list_spendings.html', context)
 
@@ -54,5 +67,24 @@ def editspending(request, id):
 def deletespending(request, id):
     myspending = spendings.objects.get(id = id)
     myspending.delete()
+    messages.success(request, ("Spending was deleted"))
     return redirect('spendings',request.user.id)
 
+
+def spendingscsv(request):
+    responce = HttpResponse(content_type='text/csv')
+    responce['Content-Disposition'] = 'attachment; filename=spendings.csv'
+
+    writer = csv.writer(responce)
+
+    myuserspendings = spendings.objects.filter(user = request.user.id).values()
+    allcategories = categories.objects.all().values()
+
+    writer.writerow(['id', 'date', 'amount', 'category', 'user'])
+
+    for spending in myuserspendings:
+        print(spending)
+        cat_id = spending['category_id'] - 1 
+        writer.writerow([spending['id'], spending['date'], spending['amount'], allcategories[cat_id]['description'], request.user])
+
+    return responce

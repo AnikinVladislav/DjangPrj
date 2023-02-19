@@ -6,19 +6,15 @@
 
 {% block content %}
 <p class="text-center h1"><span class="badge bg-dark rounded rounded-2">Personal spendings {{myuser}}</span></p>
-<div class="d-flex justify-content-between p-2">
-    <!-- <p class="text-center">Category</p>
-    <select class="form-select mb-2">
-        {% for category in  allcategories %}
-            <option>{{category.description}}</option>
-        {% endfor %}
-    </select> -->
+<div class="d-flex justify-content-end p-2">
+    <!-- <a href="?searched="><button type="submit" class="btn btn-outline-success btn-lg me-2"><i class="fa-solid fa-magnifying-glass"></i></button></a> -->
+    <a href="{% url 'spendingscsv' %}"><button class="btn btn-outline-success btn-lg me-2" type="button"><i class="fa-solid fa-file-csv"></i></button></a>
     <a href="{% url 'add_spending' %}"><button class="btn btn-outline-success btn-lg" type="button"><i class="fa-solid fa-plus"></i></button></a>
 </div>
 <div class="d-flex p-2">
     <div class="flex-grow-1">
         <ul class="list-group">
-            {% for spending in myuserspendings %}
+            {% for spending in spendings_page %}
             <li class="list-group-item d-flex border-0">
                 <a href="{% url 'edit_spending' spending.id %}" class="list-group-item list-group-item-action list-group-item-info rounded rounded-3 me-1">
                     
@@ -37,6 +33,25 @@
             {% endfor %}
         </ul>
     </div>
+</div>
+<div class="d-flex justify-content-center p-2">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if spendings_page.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{spendings_page.previous_page_number}}">Previous</a></li>
+            {% endif %}
+            {% for i in nums %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{forloop.counter}}">
+                        {{ forloop.counter }}
+                    </a>
+                </li>
+            {% endfor %}
+            {% if spendings_page.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{spendings_page.next_page_number}}">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
 </div>
 
 
