@@ -16,8 +16,8 @@ def spendigs_view(request, id):
     allcategories = categories.objects.all().values()
     print(request.GET)
 
-    # set up paginator, 8 spendings per page
-    p = Paginator(spendings.objects.filter(user=myuser).order_by('-date').values(), 8)
+    # set up paginator, 6 spendings per page
+    p = Paginator(spendings.objects.filter(user=myuser).order_by('-date').values(), 6)
     page = request.GET.get('page')
     spendings_page = p.get_page(page)
     nums = "a" * spendings_page.paginator.num_pages
