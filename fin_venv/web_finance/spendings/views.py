@@ -8,16 +8,22 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 import csv
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 
 def spendigs_view(request, id):
     myuser = User.objects.get(id=id)
-    myuserspendings = spendings.objects.filter(user=myuser).order_by('-date').values()
     allcategories = categories.objects.all().values()
     print(request.GET)
+    searched_id = []
+    for cat in allcategories: 
+        if request.GET['q'].lower() in cat['description'].lower() :
+            searched_id.append(cat['id'])
 
+    myuserspendings = spendings.objects.filter(Q(user=myuser) & Q(category__in=searched_id)).order_by('-date').values()
     # set up paginator, 6 spendings per page
-    p = Paginator(spendings.objects.filter(user=myuser).order_by('-date').values(), 6)
+    p = Paginator(spendings.objects.filter(Q(user=myuser) & Q(category__in=searched_id)).order_by('-date').values(), 6)
+
     page = request.GET.get('page')
     spendings_page = p.get_page(page)
     nums = "a" * spendings_page.paginator.num_pages
@@ -27,7 +33,7 @@ def spendigs_view(request, id):
         'myuserspendings': myuserspendings,
         'allcategories': allcategories,
         'spendings_page': spendings_page,
-        'nums': nums
+        'nums': nums,
     }
     return render(request, 'spendings/list_spendings.html', context)
 
