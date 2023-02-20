@@ -43,3 +43,15 @@ class SpendingForm(forms.ModelForm):
         print(self.cleaned_data)
         return amount
 
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = categories
+        fields = ('description',)
+
+        widgets = {
+            'description': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Category:'
+            }),
+        }
+

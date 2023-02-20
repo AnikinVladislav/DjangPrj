@@ -17,7 +17,9 @@ def spendigs_view(request, id):
     print(request.GET)
     searched_id = []
     for cat in allcategories: 
-        if request.GET['q'].lower() in cat['description'].lower() :
+        if ('q' in request.GET) and (request.GET['q'].lower() in cat['description'].lower()):
+            searched_id.append(cat['id'])
+        else:
             searched_id.append(cat['id'])
 
     myuserspendings = spendings.objects.filter(Q(user=myuser) & Q(category__in=searched_id)).order_by('-date').values()
@@ -94,3 +96,38 @@ def spendingscsv(request):
         writer.writerow([spending['id'], spending['date'], spending['amount'], allcategories[cat_id]['description'], request.user])
 
     return responce
+
+def add_category(request):
+    allcategories = categories.objects.all().values()
+    bad = False
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        for cat in allcategories: 
+            if request.POST['description'].lower() == cat['description'].lower():
+                bad = True
+        if form.is_valid() and not bad:
+            print('form valid', request.POST)
+            form.save()
+            return redirect('add_spending')
+        else:
+            if bad:
+                messages.success(request, ("Category alredy exist"))
+            print('form invalid', request.POST)
+    else:
+        form = CategoryForm()
+
+    
+
+    context = {
+        'form': form,
+        'allcategories': allcategories
+    }
+    return render(request, 'spendings/add_category.html', context)
+
+def delete_category(request, id):
+    mycategory = categories.objects.get(id = id)
+    mycategory.delete()
+    messages.success(request, ("Category was deleted"))
+    return redirect('add_category')
+
+
