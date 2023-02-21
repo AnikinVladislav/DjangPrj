@@ -19,10 +19,9 @@ def spendigs_view(request, id):
     for cat in allcategories: 
         if ('q' in request.GET) and (request.GET['q'].lower() in cat['description'].lower()):
             searched_id.append(cat['id'])
-        else:
-            searched_id.append(cat['id'])
-
+    print(searched_id)
     myuserspendings = spendings.objects.filter(Q(user=myuser) & Q(category__in=searched_id)).order_by('-date').values()
+    print(myuserspendings)
     # set up paginator, 6 spendings per page
     p = Paginator(spendings.objects.filter(Q(user=myuser) & Q(category__in=searched_id)).order_by('-date').values(), 6)
 

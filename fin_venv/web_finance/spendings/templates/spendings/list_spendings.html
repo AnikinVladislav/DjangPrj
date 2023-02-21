@@ -20,7 +20,6 @@
             {% for spending in spendings_page %}
             <li class="list-group-item d-flex border-0">
                 <a href="{% url 'edit_spending' spending.id %}" class="list-group-item list-group-item-action list-group-item-info rounded rounded-3 me-1">
-                    
                     <small><i class="fa-solid fa-calendar-days"></i> {{spending.date.day}}.{{spending.date.month}}.{{spending.date.year}}</small><br>
                     <div class="d-flex justify-content-between">
                         {% for category in  allcategories %}
