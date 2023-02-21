@@ -29,6 +29,10 @@ def spendigs_view(request, id):
     page = request.GET.get('page')
     spendings_page = p.get_page(page)
     nums = "a" * spendings_page.paginator.num_pages
+    nums_ge_6 = spendings_page.paginator.num_pages > 6
+    last_num_page = spendings_page.paginator.num_pages
+    prelast_num_page = spendings_page.paginator.num_pages - 1
+    preprelast_num_page = spendings_page.paginator.num_pages - 2
     
     context = {
         'myuser': myuser,
@@ -36,6 +40,10 @@ def spendigs_view(request, id):
         'allcategories': allcategories,
         'spendings_page': spendings_page,
         'nums': nums,
+        'nums_ge_6': nums_ge_6,
+        'last_num_page': last_num_page,
+        'prelast_num_page': prelast_num_page,
+        'preprelast_num_page': preprelast_num_page
     }
     return render(request, 'spendings/list_spendings.html', context)
 
