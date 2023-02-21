@@ -43,13 +43,23 @@
             {% if spendings_page.has_previous %}
                 <li class="page-item"><a class="page-link" href="?page={{spendings_page.previous_page_number}}">Previous</a></li>
             {% endif %}
-            {% for i in nums %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{forloop.counter}}">
-                        {{ forloop.counter }}
-                    </a>
-                </li>
-            {% endfor %}
+            {% if nums_ge_6 %}
+                <a class="page-link" href="?page=1">1</a>
+                <a class="page-link" href="?page=2">2</a>
+                <a class="page-link" href="?page=3">3</a>
+                <a class="page-link disabled" href="?page=3">...</a>
+                <a class="page-link" href="?page={{preprelast_num_page}}">{{preprelast_num_page}}</a>
+                <a class="page-link" href="?page={{prelast_num_page}}">{{prelast_num_page}}</a>
+                <a class="page-link" href="?page={{last_num_page}}">{{last_num_page}}</a>
+            {% else %}
+                {% for i in nums %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{forloop.counter}}">
+                            {{ forloop.counter }}
+                        </a>
+                    </li>
+                {% endfor %}
+            {% endif %}
             {% if spendings_page.has_next %}
                 <li class="page-item"><a class="page-link" href="?page={{spendings_page.next_page_number}}">Next</a></li>
             {% endif %}
