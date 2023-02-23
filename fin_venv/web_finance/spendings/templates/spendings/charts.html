@@ -1,0 +1,68 @@
+{% extends "main/master.html" %}
+
+{% block title %}
+    Graph
+{% endblock %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+
+<!-- <div class="d-flex m-2 p-2 rounded-5">
+    <canvas id="myChart"></canvas>
+</div> -->
+  
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+<!-- <script>
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: {{date|safe}},
+        datasets: [{
+          label: 'Spending Amount',
+          fill: true,
+          data: {{amount_by_date|safe}},
+          borderWidth: 2,
+          borderColor: 'rgb(0, 0, 0)',
+          pointHoverBackgroundColor: 'rgb(0, 0, 0)',
+          tension: 0.3
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+</script> -->
+
+<div class="d-flex m-2 p-2 rounded-5 w-50">
+    <canvas id="myDoughnut"></canvas>
+</div>
+
+<script>
+    const ctx = document.getElementById('myDoughnut');
+  
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: {{date|safe}},
+        datasets: [{
+          label: 'Spending Amount',
+        //   fill: true,
+          data: {{amount_by_date|safe}},
+        //   backgroundColor: [
+        //     'rgb(255, 99, 132)',
+        //     'rgb(54, 162, 235)',
+        //     'rgb(255, 205, 86)'
+        //     ],
+            hoverOffset: 4
+        }]
+      }
+    });
+</script>
+{% endblock %}

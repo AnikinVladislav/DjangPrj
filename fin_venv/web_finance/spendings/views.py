@@ -132,8 +132,6 @@ def add_category(request):
     else:
         form = CategoryForm()
 
-    
-
     context = {
         'form': form,
         'allcategories': allcategories
@@ -145,5 +143,37 @@ def delete_category(request, id):
     mycategory.delete()
     messages.success(request, ("Category was deleted"))
     return redirect('add_category')
+
+def charts_spendings(request):
+    date = []
+    amount_by_date = []
+    amount_by_caregory = []
+    dict_cat = {}
+    myuserspendings = spendings.objects.filter(user = request.user.id).order_by('date').values()
+    allcategories = categories.objects.all().values()
+
+    for cat in allcategories:
+        dict_cat[cat['id']] = cat['description']
+
+    for spending in myuserspendings:
+        if spending['date'].month == 2 and spending['date'].year == 2023: 
+            if date == []:
+                date.append(f'{spending["date"].day}.0{spending["date"].month}.{spending["date"].year}')
+                amount_by_date.append(spending["amount"])
+            elif date[-1] == f'{spending["date"].day}.0{spending["date"].month}.{spending["date"].year}':
+                amount_by_date[-1] += spending["amount"]
+            else:
+                date.append(f'{spending["date"].day}.0{spending["date"].month}.{spending["date"].year}')
+                amount_by_date.append(spending["amount"])
+
+            if dict_cat[spending['category_id']] == 'Food':
+                print(spending["amount"])
+    context = {
+        'date': date,
+        'amount_by_date': amount_by_date,
+        'amount_by_caregory': amount_by_caregory
+    }
+    return render(request, 'spendings/charts.html', context)
+
 
 
