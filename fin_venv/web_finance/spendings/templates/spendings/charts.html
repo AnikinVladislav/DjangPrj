@@ -50,18 +50,26 @@
     new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: {{date|safe}},
+        labels: {{category_desc|safe}},
         datasets: [{
           label: 'Spending Amount',
         //   fill: true,
-          data: {{amount_by_date|safe}},
+          data: {{amount_by_caregory|safe}},
         //   backgroundColor: [
         //     'rgb(255, 99, 132)',
         //     'rgb(54, 162, 235)',
         //     'rgb(255, 205, 86)'
         //     ],
-            hoverOffset: 4
+            hoverOffset: 4,
+            display: false
         }]
+      },
+      options: {
+        plugins: {
+            legend: {
+                display: false,
+            }
+        }
       }
     });
 </script>

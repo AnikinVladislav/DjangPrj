@@ -148,13 +148,17 @@ def charts_spendings(request):
     date = []
     amount_by_date = []
     amount_by_caregory = []
+    category_desc = []
     dict_cat = {}
+
     myuserspendings = spendings.objects.filter(user = request.user.id).order_by('date').values()
     allcategories = categories.objects.all().values()
 
     for cat in allcategories:
-        dict_cat[cat['id']] = cat['description']
+        dict_cat[cat['id']] = [cat['description'], 0]
 
+    print(dict_cat[1][0])
+    
     for spending in myuserspendings:
         if spending['date'].month == 2 and spending['date'].year == 2023: 
             if date == []:
@@ -166,12 +170,20 @@ def charts_spendings(request):
                 date.append(f'{spending["date"].day}.0{spending["date"].month}.{spending["date"].year}')
                 amount_by_date.append(spending["amount"])
 
-            if dict_cat[spending['category_id']] == 'Food':
-                print(spending["amount"])
+            dict_cat[spending['category_id']][1] += spending['amount']
+            
+    for i in range(1,len(dict_cat)+1):
+        category_desc.append(dict_cat[i][0])
+        amount_by_caregory.append(dict_cat[i][1])
+    print(dict_cat)
+    print(category_desc)
+    
+                
     context = {
         'date': date,
         'amount_by_date': amount_by_date,
-        'amount_by_caregory': amount_by_caregory
+        'amount_by_caregory': amount_by_caregory,
+        'category_desc': category_desc
     }
     return render(request, 'spendings/charts.html', context)
 
