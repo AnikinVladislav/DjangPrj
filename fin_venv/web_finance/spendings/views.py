@@ -213,9 +213,7 @@ def charts_spendings(request):
 
 
 def prediction(request):
-    dict_cat = {}
-    prediction_day_by_category = {}
-    prediction_month_by_category = {}
+
     predict_day = []
     predict_month = []
     category_desc = []
@@ -224,33 +222,14 @@ def prediction(request):
     allcategories = categories.objects.all().values()
 
     for cat in allcategories:
-        dict_cat[cat['id']] = cat['description']
         category_desc.append(cat['description'])
 
-    prediction_day_by_category, prediction_month_by_category = predict(list(myuserspendings), dict_cat)
-
-    for i in prediction_day_by_category.keys():
-        predict_day.append(prediction_day_by_category[i])
-
-    sum_day = 0
-    for spending in predict_day:
-        sum_day += spending
-    mean_day = (sum_day/len(predict_day))
+    predict_day, predict_month = predict(list(myuserspendings))
     
-    for i in prediction_month_by_category.keys():
-        predict_month.append(prediction_month_by_category[i])
-
-    sum_month = 0
-    for spending in predict_month:
-        sum_month += spending
-    mean_month = (sum_month/len(predict_month))
-
     context = {
         'category_desc': category_desc,
         'predict_day': predict_day,
-        'predict_month': predict_month,
-        'mean_month': mean_month,
-        'mean_day': mean_day
+        'predict_month': predict_month
     }
     return render(request, 'spendings/prediction_spending.html', context)
 
