@@ -25,8 +25,8 @@ def predict(spendings):
 
     spendings_by_category = []
     for k in set([x['category_id'] for x in spendings]):
-        spendings_by_category.append([x for x in spendings if x['category_id'] == k])
-
+        spendings_by_category.append([x for x in spendings if x['category_id'] == k]) 
+        
     day_prediction = []
     month_prediction = []
 
