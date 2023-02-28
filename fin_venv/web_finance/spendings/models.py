@@ -23,3 +23,4 @@ class spendings(models.Model):
     class Meta:
         verbose_name = 'spending'
         verbose_name_plural = 'spendings'
+        
