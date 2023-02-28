@@ -225,7 +225,7 @@ def prediction(request):
         category_desc.append(cat['description'])
 
     predict_day, predict_month = predict(list(myuserspendings))
-    
+    print(list(myuserspendings))
     context = {
         'category_desc': category_desc,
         'predict_day': predict_day,

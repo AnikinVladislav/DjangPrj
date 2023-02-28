@@ -9,6 +9,17 @@ import torch.nn.functional as F
 
 
 def predict(spendings):
+    """ Function for predicting spendings by catigory
+        for each catigory own model
+
+        spindings - list of dicts with structure 
+        {   "id": id spending,
+            "date": datetime.datetime,
+            "amount": spenidng amount,
+            "category_id": id spending category,
+            "user_id": id user
+        } 
+    """
 
     class Net(nn.Module):
         def __init__(self):
@@ -24,6 +35,7 @@ def predict(spendings):
             return x
 
     spendings_by_category = []
+    # split input list on lists by categories
     for k in set([x['category_id'] for x in spendings]):
         spendings_by_category.append([x for x in spendings if x['category_id'] == k]) 
         
