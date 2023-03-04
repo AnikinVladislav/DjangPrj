@@ -6,60 +6,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# class SpendingPrediction():
-
-#     def __init__(self, spendings):
-
-#         class Net(nn.Module):
-#             def __init__(self):
-#                 super(Net, self).__init__()
-#                 self.fc1 = nn.Linear(5, 125)
-#                 self.fc2 = nn.Linear(125, 25)
-#                 self.fc3 = nn.Linear(25, 1)
-                
-#             def forward(self, x):
-#                 x = F.relu(self.fc1(x))
-#                 x = F.relu(self.fc2(x))
-#                 x = self.fc3(x)
-#                 return x
-            
-#         self.spending_list = spendings
-#         self.categorie_ids = set([x['category_id'] for x in test_list])
-#         self.num_of_categories = len(self.categorie_ids)
-#         self.model_list = [Net() for i in range(self.num_of_categories)]
-#         self.optimizer_list = [torch.optim.SGD(self.model_list[i].parameters(), lr=0.01) for i in range(self.num_of_categories)]
-#         self.day_prediction = []
-#         self.month_prediction = []
-#         self.spendings_by_category = []
-#         # split input list on lists by categories
-#         for k in self.categorie_ids:
-#             self.spendings_by_category.append([x for x in self.spending_list if x['category_id'] == k]) 
-#         self.scaler = MinMaxScaler()
-#         self.scaler_test = MinMaxScaler()
-#         self.scaler_amount = MinMaxScaler()
-
-#     def fit(self):
-#         # df for fit MinMaxScaler
-#         year = datetime.datetime.now().year
-#         month = datetime.datetime.now().month
-#         dict_scaler = {"Day": list(range(1,calendar.monthrange(year, month)[1]+1)),
-#                "Month" : [i+1 for i in range(12)], 
-#                "Hour": [i for i in range(24)],
-#                "Minute": [i for i in range(60)],
-#                "Weekday": [i for i in range(7)],
-#                "amount": [0, df["amount"].max()]}
-#         df_scaler = pd.DataFrame.from_dict(dict_scaler, orient='index')
-#         df_scaler = df_scaler.transpose()
-#         df_scaler = df_scaler.fillna(1)
-#         df_scaler[["Day", "Month", "Hour", "Minute", "Weekday"]] = df_scaler[["Day", "Month", "Hour", "Minute", "Weekday"]].astype('int64')
-
-#         # Scalers for better prediction
-#         scaler = MinMaxScaler()
-#         scaler_test = MinMaxScaler()
-#         scaler_amount = MinMaxScaler()
-#         scaler.fit(df_scaler[["Day", "Month", "Hour", "Minute", "Weekday", "amount"]])
-#         scaler_test.fit(df_scaler[["Day", "Month", "Hour", "Minute", "Weekday"]])
-#         scaler_amount.fit(df_scaler["amount"].to_numpy().reshape(-1, 1))
 
 def predict(spendings):
     """ Function for predicting spendings by catigory
