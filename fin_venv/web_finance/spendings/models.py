@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class MyUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    prediction = models.JSONField(default={'day_prediction': [], 'month_prediction': []})
+
+    def __str__(self):
+        return f"{self.user}"
+
 class categories(models.Model):
     description = models.CharField(max_length=255, unique=True)
 
