@@ -136,6 +136,6 @@ def predict(spendings):
             test_month_outputs = model(test_month_inputs).numpy()
 
         day_prediction.append(float(scaler_amount.inverse_transform(test_day_outputs)))
-        month_prediction.append(scaler_amount.inverse_transform(test_month_outputs).sum())
+        month_prediction.append(float(scaler_amount.inverse_transform(test_month_outputs).sum()))
 
     return day_prediction, month_prediction
