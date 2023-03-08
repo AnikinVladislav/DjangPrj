@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class MyUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    prediction = models.JSONField(default={'day_prediction': [], 'month_prediction': []})
+    prediction = models.JSONField(default={'day_prediction': [], 'month_prediction': [], 'categories' : []})
 
     def __str__(self):
         return f"{self.user}"

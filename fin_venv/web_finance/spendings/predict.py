@@ -89,7 +89,7 @@ def predict(spendings):
         optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
 
         # Train the model
-        for epoch in range(1000):
+        for epoch in range(100000):
             # Forward pass
             outputs = model(train_inputs)
             loss = criterion(outputs, train_labels)

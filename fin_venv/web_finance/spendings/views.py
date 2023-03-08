@@ -218,14 +218,11 @@ def prediction(request):
     predict_month = []
     category_desc = []
 
-    myuserspendings = spendings.objects.filter(user = request.user.id).order_by('date').values()
-    allcategories = categories.objects.all().values()
-
-    for cat in allcategories:
-        category_desc.append(cat['description'])
-
-    predict_day, predict_month = predict(list(myuserspendings))
-    print(list(myuserspendings))
+    temp = MyUser.objects.get(user=request.user.id)
+    predict_day = temp.prediction["day_prediction"]
+    predict_month = temp.prediction["month_prediction"]
+    category_desc = temp.prediction["categories"]
+ 
     context = {
         'category_desc': category_desc,
         'predict_day': predict_day,
