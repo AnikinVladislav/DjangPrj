@@ -27,7 +27,6 @@
         <ul class="list-group"> 
             {% for cat in allcategories %}
                 <li class="list-group-item  list-group-item-info">
-                    <a href="{% url 'delete_category' cat.id %}"><button class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i></button></a>
                     {{ cat.description }}
                 </li>
             {% endfor %}

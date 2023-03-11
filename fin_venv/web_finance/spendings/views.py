@@ -14,7 +14,7 @@ from django.db.models import Q
 
 def spendigs_view(request, id):
     myuser = User.objects.get(id=id)
-    allcategories = categories.objects.all().values()
+    allcategories = categories.objects.all().order_by('description').values()
     searched_id = []
     query = ''
     print(request.GET)
@@ -104,7 +104,7 @@ def spendingscsv(request):
     writer = csv.writer(responce)
 
     myuserspendings = spendings.objects.filter(user = request.user.id).values()
-    allcategories = categories.objects.all().values()
+    allcategories = categories.objects.all().order_by('description').values()
 
     writer.writerow(['id', 'date', 'amount', 'category', 'user'])
 
@@ -116,7 +116,7 @@ def spendingscsv(request):
     return responce
 
 def add_category(request):
-    allcategories = categories.objects.all().values()
+    allcategories = categories.objects.all().order_by('description').values()
     bad = False
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -140,11 +140,6 @@ def add_category(request):
     }
     return render(request, 'spendings/add_category.html', context)
 
-def delete_category(request, id):
-    mycategory = categories.objects.get(id = id)
-    mycategory.delete()
-    messages.success(request, ("Category was deleted"))
-    return redirect('add_category')
 
 def charts_spendings(request):
     date = []
@@ -218,10 +213,11 @@ def prediction(request):
     predict_month = []
     category_desc = []
 
-    temp = MyUser.objects.get(user=request.user.id)
-    predict_day = temp.prediction["day_prediction"]
-    predict_month = temp.prediction["month_prediction"]
-    category_desc = temp.prediction["categories"]
+    if MyUser.objects.filter(user=request.user.id).exists():
+        temp = MyUser.objects.get(user=request.user.id)
+        predict_day = temp.prediction["day_prediction"]
+        predict_month = temp.prediction["month_prediction"]
+        category_desc = temp.prediction["categories"]
  
     context = {
         'category_desc': category_desc,

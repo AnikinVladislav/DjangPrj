@@ -16,7 +16,7 @@ class DateTimeLocalField(forms.DateTimeField):
 
 
 class SpendingForm(forms.ModelForm):
-    category = forms.ModelChoiceField(queryset=categories.objects.all(), empty_label='category not selected',widget=forms.Select(attrs={'class': 'form-select'}))
+    category = forms.ModelChoiceField(queryset=categories.objects.all().order_by('description'), empty_label='category not selected',widget=forms.Select(attrs={'class': 'form-select'}))
 
     class Meta:
         model = spendings
